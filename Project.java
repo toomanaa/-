@@ -1,66 +1,66 @@
-import java.util.Scanner; // استيراد المكتبة المسؤولة عن أخذ الإدخال من المستخدم
-import java.util.Random; // استيراد المكتبة المسؤولة عن إنشاء أرقام عشوائية
+import java.util.Scanner; // استيراد مكتبة Scanner لقراءة إدخال المستخدم
+import java.util.Random; // استيراد مكتبة Random لتوليد أرقام عشوائية
 
 public class WordScrambleGame {
     public static void main(String[] args) {
-        // تعريف مصفوفة تحتوي على مجموعة من الكلمات
+        // مصفوفة تحتوي على الكلمات التي سيتم استخدامها في اللعبة
         String[] words = {"apple", "banana", "orange", "grape", "mango", "cherry", "peach", "melon"};
         
         // تعريف المتغيرات الأساسية للعبة
-        int score = 0; // تخزين النقاط
-        int totalRounds = 5; // عدد الجولات في اللعبة
-        Random random = new Random(); // كائن لإنشاء أرقام عشوائية
-        Scanner scanner = new Scanner(System.in); // كائن لقراءة الإدخال من المستخدم
+        int score = 0; // لتخزين نقاط اللاعب
+        int totalRounds = 5; // عدد الجولات التي ستلعبها اللعبة
+        Random random = new Random(); // كائن Random لاختيار الكلمات عشوائيًا
+        Scanner scanner = new Scanner(System.in); // كائن Scanner لقراءة الإدخال من المستخدم
         
-        // رسالة ترحيبية بالمستخدم
-        System.out.println("مرحبًا بك في لعبة ترتيب الحروف!");
-        System.out.println("قم بإعادة ترتيب الحروف لتكوين الكلمة الصحيحة.");
-        System.out.println("اكتب 'exit' لإنهاء اللعبة في أي وقت.\n");
+        // طباعة رسالة ترحيبية
+        System.out.println("Welcome to the Word Scramble Game!");
+        System.out.println("Unscramble the letters to form the correct word.");
+        System.out.println("Type 'exit' to quit the game anytime.\n");
         
         // الحلقة الرئيسية للعبة
         for (int round = 1; round <= totalRounds; round++) {
-            // اختيار كلمة عشوائيًا من المصفوفة
+            // اختيار كلمة عشوائية من المصفوفة
             String originalWord = words[random.nextInt(words.length)];
             
-            // خلط حروف الكلمة
+            // خلط الكلمة المختارة عشوائيًا
             String scrambledWord = scrambleWord(originalWord, random);
             
             // عرض الجولة والكلمة المخلوطة للمستخدم
-            System.out.println("الجولة " + round + ":");
-            System.out.println("الكلمة المخلوطة: " + scrambledWord);
+            System.out.println("Round " + round + ":");
+            System.out.println("Scrambled Word: " + scrambledWord);
             
-            // طلب التخمين من المستخدم
-            System.out.print("تخمينك: ");
+            // طلب تخمين المستخدم
+            System.out.print("Your guess: ");
             String guess = scanner.nextLine().trim().toLowerCase(); // قراءة الإدخال
             
-            // إنهاء اللعبة إذا كتب المستخدم "exit"
+            // التحقق مما إذا كان المستخدم يريد الخروج من اللعبة
             if (guess.equals("exit")) {
-                System.out.println("شكرًا للعب! مجموع نقاطك النهائي: " + score);
+                System.out.println("Thanks for playing! Your final score is: " + score);
                 break;
             }
             
             // التحقق من صحة التخمين
             if (guess.equals(originalWord)) {
-                System.out.println("إجابة صحيحة! +10 نقاط.");
-                score += 10; // إضافة النقاط
+                System.out.println("Correct! +10 points.");
+                score += 10; // إضافة النقاط إذا كانت الإجابة صحيحة
             } else {
-                System.out.println("إجابة خاطئة! الكلمة الصحيحة كانت: " + originalWord);
+                System.out.println("Incorrect! The correct word was: " + originalWord);
             }
             
             // عرض النقاط الحالية
-            System.out.println("مجموع النقاط الحالي: " + score + "\n");
+            System.out.println("Your current score: " + score + "\n");
         }
         
-        // رسالة نهاية اللعبة
-        System.out.println("انتهت اللعبة! مجموع نقاطك النهائي هو: " + score);
-        scanner.close(); // إغلاق كائن الإدخال
+        // عرض رسالة نهاية اللعبة
+        System.out.println("Game Over! Your final score is: " + score);
+        scanner.close(); // إغلاق Scanner
     }
 
     // دالة لخلط حروف الكلمة
     private static String scrambleWord(String word, Random random) {
-        char[] letters = word.toCharArray(); // تحويل الكلمة إلى مصفوفة حروف
+        char[] letters = word.toCharArray(); // تحويل الكلمة إلى مصفوفة من الحروف
         for (int i = 0; i < letters.length; i++) {
-            // اختيار موقع عشوائي لتبديل الحروف
+            // اختيار مواضع عشوائية لتبديل الحروف
             int j = random.nextInt(letters.length);
             
             // تبديل الحروف
@@ -68,6 +68,6 @@ public class WordScrambleGame {
             letters[i] = letters[j];
             letters[j] = temp;
         }
-        return new String(letters); // تحويل المصفوفة إلى نص وإرجاعه
+        return new String(letters); // تحويل مصفوفة الحروف إلى نص وإعادتها
     }
 }
